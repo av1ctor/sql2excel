@@ -1,0 +1,34 @@
+input:
+    type: sqlite3
+    sources: 
+        - name: mysqlite3.db
+          partition: 
+            type: monthly
+            begin: 2022-01-01
+            end: 2022-12-31
+    time-format: 2006-01-02 # see https://yourbasic.org/golang/format-parse-string-time-date-example/
+    query: >
+        select
+            id,
+            date,
+            value,
+            value * 2 as double
+            from mytable
+            where date between '{part.beg}' and '{part.end}'
+            order by id asc;
+output:
+    name: My plan - {part.beg}-{part.end}
+    variables:
+        - col: 2
+          row: 6
+          value: partition {part.beg} to {part.end}
+    totalizations:
+        - col: 4
+          formula: =SUM(D10:D{rows.last})
+        - col: 5
+          formula: =SUM(E10:E{rows.last})
+template:
+    path: template.xlsx
+    sheet: example
+    start-row: 10
+    start-col: 2
