@@ -1,5 +1,5 @@
 # sql2excel
-Exports partitioned SQL query results to Microsoft Excel using a template
+Exports partitioned SQL query results to Microsoft Excel using a template   
 Copyright 2022 by André Vicentini
 
 Supported at the moment:
